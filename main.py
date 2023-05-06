@@ -93,7 +93,7 @@ path7_name_basics = "D:\\DataSets_project\\name.basics.tsv.gz"
 
 
 # *******************  TASK 1 ************************************************************
-
+'''
 from_csv_df1 = spark_session.read.csv(path1_acaS,
                                       header=True,
                                       nullValue='null',
@@ -101,16 +101,16 @@ from_csv_df1 = spark_session.read.csv(path1_acaS,
                                       sep='\t',
                                       schema=schema1_acaS)
 from_csv_df1.show(100)
-'''
-'''
+
+
 for_ua = from_csv_df1.select("title", "region").filter(f.col("region") == "UA")
 for_ua.show(200)
 path_to_saved_acaS = 'D:\\DataSets_project\\Saved_files\\task1\\saved_acaS'
 for_ua.write.csv(path_to_saved_acaS)
 print("Saved to D:\\DataSets_project\\Saved_files\\task1\\saved_acaS")
-
+'''
 # *******************  END OF TASK 1 ************************************************************
-
+'''
 # first_100_df.show()
 
 from_csv_df1.printSchema()
@@ -167,9 +167,9 @@ from_csv_df6 = spark_session.read.csv(path6_ratings,
 from_csv_df6.show()
 from_csv_df6.printSchema()
 
-
+'''
 # *******************  TASK 2 ************************************************************
-
+'''
 from_csv_df7 = spark_session.read.csv(path7_name_basics,
                                       header=True,
                                       nullValue='null',
@@ -184,12 +184,12 @@ for_task2.show(200)
 path_to_saved_name_basics = 'D:\\DataSets_project\\Saved_files\\task2\\saved_name_basics'
 for_task2.write.csv(path_to_saved_name_basics)
 print("Saved to D:\\DataSets_project\\Saved_files\\task2\\saved_name_basics")
-
+'''
 # *******************  END OF TASK 2 ************************************************************
 
 
 # *******************  TASK 3 ************************************************************
-
+'''
 from_csv_df2 = spark_session.read.csv(path2_title_basics,
                                       header=True,
                                       nullValue='null',
@@ -208,13 +208,11 @@ for_task3.show(100)
 path_to_saved_title_basics = 'D:\\DataSets_project\\Saved_files\\task3\\saved_title_basics'
 # for_task3.write.csv(path_to_saved_title_basics)
 print("Saved to D:\\DataSets_project\\Saved_files\\task3\\saved_title_basics")
-
+'''
 # ***************************** END OF TASK 3 ***************************************
 
-print("*********** END OF TASK 3 ***********")
-
 # *******************  TASK 4 ************************************************************
-
+'''
 from_csv_df5 = spark_session.read.csv(path5_principals,
                                       header=True,
                                       nullValue='null',
@@ -267,8 +265,6 @@ Res_Task4_df.write.csv(path_to_saved_Res_Task4_df, header=True, mode="overwrite"
 print("Res_Task4_df Saved to D:\\DataSets_project\\Saved_files\\task4\\saved_Res_Task4_df")
 
 # *******************  END OF TASK 4 ******************************************************
-
-print("*******  END OF TASK 4 *****")
 '''
 # *******************  TASK 5 ************************************************************
 '''
@@ -384,15 +380,13 @@ print("Res_Task5_2_df Saved to D:\\DataSets_project\\Saved_files\\task4\\saved_R
 # path_to_saved_principals = 'D:\\DataSets_project\\Saved_files\\task4\\saved_principals'
 # for_task4.write.csv(path_to_saved_principals)
 print("Saved to D:\\DataSets_project\\Saved_files\\task4\\saved_principals")
-
+'''
 # *******************  END OF TASK 5 ************************************************************
-
-print("KKKKKKKKKKKKKKKKKKKKKKK")
 
 # *******************  TASK 6 ************************************************************
 '''
 # ************************* Read title_basics **********************
-'''
+
 from_csv_df2 = spark_session.read.csv(path2_title_basics,
                                       header=True,
                                       nullValue='null',
@@ -428,7 +422,7 @@ Res_Task6 = Ordered_Groop_epizode.limit(50)
 path_to_saved_epizodes = 'D:\\DataSets_project\\Saved_files\\task6\\saved_epizodes'
 Res_Task6.write.csv(path_to_saved_epizodes, header=True, mode="overwrite")
 print("Saved to D:\\DataSets_project\\Saved_files\\task6\\saved_epizodes")
-
+'''
 # *******************  END OF TASK 6 ************************************************************
 
 # *******************  TASK 7 *******************************************************************
@@ -470,7 +464,7 @@ Added_decade2 = Added_decade.withColumn('Decade', f.col('startYear') // 10)
 '''
 
 # *******************  TASK 8 ************************************************************
-
+'''
 from_csv_df5 = spark_session.read.csv(path5_principals,
                                       header=True,
                                       nullValue='null',
