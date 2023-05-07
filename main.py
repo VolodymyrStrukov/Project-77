@@ -506,7 +506,11 @@ def func_task8() :
                                       schema=schema6_ratings)
     # from_csv_df6.show(100)
     # ******************* End Reading ratings ********************
-
+    Added_Rating = from_csv_df2.join(from_csv_df6, on=from_csv_df2["tcoNst"] == from_csv_df6["tcoNst"],
+                                      how='left')
+    Added_Rating = Added_Rating.drop("tcoNst", "tcoNst", "titleType", "isAdult", "startYear", "endYear",
+                                     "runtimeMinutes", "primaryTitle")
+    Added_Rating.printSchema()
     # **************** Write Res Task 8 *******************
 
     # path_to_saved_task8 = 'D:\\DataSets_project\\Saved_files\\task8\\saved_task8'
@@ -520,6 +524,6 @@ def func_task8() :
 # func_task4()
 # func_task5()
 # func_task6()
-func_task7()
-# func_task8()
+#func_task7()
+func_task8()
 
