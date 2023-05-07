@@ -3,6 +3,7 @@ import pyspark
 import pandas as pd
 import pyspark.sql.types as t
 import pyspark.sql.functions as f
+from pyspark.sql.window import Window
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
 spark_session = (SparkSession.builder
@@ -443,18 +444,41 @@ def func_task7() :
                                       dateFormat='yyyy',
                                       sep='\t',
                                       schema=schema5_principals)
-    from_csv_df5.show(100)
-
+    # from_csv_df5.show(100)
+    # ***************************** Adding decade ***********************
     Added_decade = from_csv_df2.withColumn("Decade", f.lit(1))
-    Added_decade.printSchema()
-    Added_decade.select('startYear', 'Decade').show(100)
-    Added_decade2 = Added_decade.withColumn('Decade', f.col('startYear') // 10)
+    # Added_decade.printSchema()
+    Added_decade1 = Added_decade.select("tcoNst","originalTitle", "startYear", "Decade")
+    Added_decade2 = Added_decade1.withColumn("Decade", f.floor(f.col("startYear") / 10))
+    Added_decade3 = Added_decade2.drop("startYear")
+    # Added_decade3.show(100)
+    # Added_decade3.printSchema()
 
+    # ***************************** Adding rating ***********************
 
-    # for_task4 = from_csv_df5.select("primaryTitle", "runtimeMinutes").filter(f.col("runtimeMinutes") > 120)
+    from_csv_df6 = spark_session.read.csv(path6_ratings,
+                                          header=True,
+                                          nullValue='null',
+                                          dateFormat='yyyy',
+                                          sep='\t',
+                                          schema=schema6_ratings)
+    Select_Rating = from_csv_df6.select("tcoNst","averageRating")
 
-    # from_csv_df2.printSchema()
-    # for_task4.show(100)
+    Added_Rating = Added_decade3.join(Select_Rating, on=Added_decade3["tcoNst"] == Select_Rating["tconst"],
+                    how='left')
+    Added_Rating = Added_Rating.drop("tcoNst", "tcoNst")
+    Added_Rating = Added_Rating.filter(f.col("averageRating").isNotNull())
+    # Added_Rating.show(100)
+    Added_Rating = Added_Rating.orderBy("Decade", ascending=False)
+
+    # Added_Rating.select(f.countDistinct("Decade")).show()
+
+    # ****************** Sorting in groops *****************************
+    window = Window.partitionBy("Decade").orderBy(f.col("averageRating").desc())
+    Res1 = Added_Rating.withColumn("rank", f.rank().over(window))
+    Res1.show(1000)
+
+    # **************** Write Res Task 7 *******************
 
     # path_to_saved_Task7 = 'D:\\DataSets_project\\Saved_files\\task7\\saved_Task7'
     # for_task7.write.csv(path_to_saved_Task7, header=True, mode="overwrite")
@@ -483,22 +507,19 @@ def func_task8() :
     # from_csv_df6.show(100)
     # ******************* End Reading ratings ********************
 
-
-    # for_task4 = from_csv_df5.select("primaryTitle", "runtimeMinutes").filter(f.col("runtimeMinutes") > 120)
-
+    # **************** Write Res Task 8 *******************
 
     # path_to_saved_task8 = 'D:\\DataSets_project\\Saved_files\\task8\\saved_task8'
     # for_task4.write.csv(path_to_saved_task8, header=True, mode="overwrite")
     # print("Saved to D:\\DataSets_project\\Saved_files\\task8\\saved_task8")
     return
 # *******************  END OF TASK 8 ************************************************************
-func_task1()
-'''
-func_task2()
-func_task3()
-func_task4()
-func_task5()
-func_task6()
+# func_task1()
+# func_task2()
+# func_task3()
+# func_task4()
+# func_task5()
+# func_task6()
 func_task7()
-func_task8()
-'''
+# func_task8()
+
