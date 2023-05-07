@@ -524,6 +524,6 @@ def func_task8() :
 # func_task4()
 # func_task5()
 # func_task6()
-#func_task7()
+func_task7()
 func_task8()
 
